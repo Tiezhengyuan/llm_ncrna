@@ -116,10 +116,10 @@ class MyData:
 
 
 
+#
     def get_origin_data(self) -> list:
         # true miRNAs
         self.wrap(self.origin_data(), True)
-        # self.wrap(self.shuffle_data(), False)
         return self.train_data
 
     def get_data(self) -> list:
@@ -134,6 +134,19 @@ class MyData:
         print(f"Number of miRNA seq: {n}")
         return self.train_data
     
+    def get_length_data(self):
+        data = {}
+        for seq, specie in self.parser.iterate_fa():
+            _len = len(seq)
+            if _len not in data:
+                data[_len] = {'texts': [], 'labels': []}
+            data[_len]['texts'].append(seq)
+            data[_len]['labels'].append(specie)
+        
+        for _len in data:
+            _data = data[_len]
+            data[_len] = MyDataset(_data['texts'], _data['labels'])
+        return data
 
     def get_random_data(self):
         '''

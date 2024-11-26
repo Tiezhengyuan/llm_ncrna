@@ -13,7 +13,7 @@ class MyEmbedding:
         num_train = round(len(self.data)*.8)
         num_valid = len(self.data) - num_train
         self.train_dataset, self.valid_dataset = random_split(self.data, [num_train, num_valid])
-        print(self.train_dataset[0])
+        print('An example of train_dataset:', self.train_dataset[0])
         print(len(self.train_dataset), type(self.train_dataset))
         return self.train_dataset, self.valid_dataset
 

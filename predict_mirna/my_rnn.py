@@ -18,7 +18,8 @@ class RNN(nn.Module):
         out = self.embedding(text)
         # Packs a Tensor containing padded sequences of variable length.
         lengths = lengths.cpu().numpy()
-        out = nn.utils.rnn.pack_padded_sequence(out, lengths, batch_first=True, enforce_sorted=False)
+        out = nn.utils.rnn.pack_padded_sequence(out, lengths, \
+            batch_first=True, enforce_sorted=False)
         # 
         out, (hidden, cell) = self.rnn(out)
         out = hidden[-1, :, :]
