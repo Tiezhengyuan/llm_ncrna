@@ -32,7 +32,10 @@ class MyData:
 
         return self.train_data        
 
-    def wrap(self, data_tuple, new=False):
+    def wrap(self, data_tuple, new=False) -> list:
+        '''
+        return data for train
+        '''
         if new is True:
             self.train_data = []
         data = []
@@ -46,15 +49,6 @@ class MyData:
         self.train_data += data
         return data
 
-    
-    def origin_data(self) -> tuple:
-        texts, labels, n = [], [], 0
-        for seq, specie in self.parser.iterate_fa():
-            texts.append(seq)
-            labels.append(specie)
-            n += 1
-        print(f"Number of origin seq: {n}")
-        return texts, labels
 
     def shuffle_data(self, repeat:int):
         '''
@@ -115,12 +109,22 @@ class MyData:
         return texts, labels
 
 
-
 #
     def get_origin_data(self) -> list:
-        # true miRNAs
+        """
+        update self.train_data including all true miRNAs
+        """
         self.wrap(self.origin_data(), True)
         return self.train_data
+    
+    def origin_data(self) -> tuple:
+        texts, labels, n = [], [], 0
+        for seq, specie in self.parser.iterate_fa():
+            texts.append(seq)
+            labels.append(specie)
+            n += 1
+        print(f"Number of origin seq: {n}")
+        return texts, labels
 
     def get_data(self) -> list:
         n = 0
